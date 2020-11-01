@@ -19,6 +19,16 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="$YS_VCS_PROMPT_SUFFIX"
 ZSH_THEME_GIT_PROMPT_DIRTY="$YS_VCS_PROMPT_DIRTY"
 ZSH_THEME_GIT_PROMPT_CLEAN="$YS_VCS_PROMPT_CLEAN"
 
+# Conda info
+local conda_info='$(conda_prompt_info)'
+conda_prompt_info(){
+  if [ -n "$CONDA_DEFAULT_ENV" ]; then
+    echo -n "%{$fg[green]($CONDA-DEFAULT-ENV)%{$reset_color%}"
+  else
+    echo -n "%{$fg[green](base)%{$reset_color%}"
+  fi
+}
+
 # HG info
 local hg_info='$(ys_hg_prompt_info)'
 ys_hg_prompt_info() {
@@ -50,6 +60,7 @@ PROMPT="
 %{$terminfo[bold]$fg[blue]%}#%{$reset_color%} \
 %(#,%{$bg[yellow]%}%{$fg[black]%}%n%{$reset_color%},%{$fg[cyan]%}%n) \
 %{$fg[white]%}@ \
+${conda_info}\
 %{$fg[green]%}%m \
 %{$fg[white]%}in \
 %{$terminfo[bold]$fg[yellow]%}%~%{$reset_color%}\
